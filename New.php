@@ -20,23 +20,12 @@ class SocialAccountRepository
 
     private $fbPage;
 
-    /**
-     * create instance
-     *
-     * @param SocialAccount $model
-     */
     public function __construct(SocialAccount $model, FbPage $fbPage)
     {
         $this->model = $model;
         $this->fbPage = $fbPage;
     }
-
-    /**
-     * Disconnect Account
-     * @param  SocialAccountEntity $entity
-     * @return boolean
-     */
-    public function disconnect(SocialAccountEntity $entity)
+        public function disconnect(SocialAccountEntity $entity)
     {
         $id = $entity->getId();
         $builder = $this->model->where('channel', $entity->getChannel())
@@ -61,8 +50,7 @@ class SocialAccountRepository
         if($id) {
             $builder = $builder->where('id', $id);
         }
-        
-        dd($builder);
+
         $socialAccount = $builder->get();
         $account = Arr::collapse($socialAccount->toArray());
         if($accountId = Arr::get($account, 'id')) {
